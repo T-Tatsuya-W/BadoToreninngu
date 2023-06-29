@@ -10,10 +10,21 @@
     <h1 id="formationTitle" class="button" onclick="toggleFormation()">Singles Formations</h1>
     
     <!-- Add other necessary HTML elements for the player formations mode -->
+    <div id="court">
+        <img id="courtImage" src="images/courtLines.jpg" alt="Badminton Court">
+
+    </div>
     
-    
+    <button id="startGameButton" class="button">Start Interval Trainer</button>
   </div>
-  <button id="startGameButton" class="button">Start Interval Trainer</button>
+
+  <div id = "gameContainer"   style="display: none;">
+    <h1>Game</h1>
+    <div id="court">
+        <img id="courtImage" src="images/courtLines.jpg" alt="Badminton Court">
+
+    </div>
+  </div>
 
   <script src="js/script.js"></script>
 </body>
