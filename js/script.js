@@ -113,35 +113,6 @@ function addPlayerIcon(event) {
     
 
     
-
-    /*
-    
-    // Check if in doubles mode and replace the oldest token
-    if (PFMode == 2) {
-        const BplayerIcons = PFcourt.getElementsByClassName('player-icon-blue');
-        if (BplayerIcons.length > 2) {
-            BplayerIcons[0].remove();
-        }
-        const RplayerIcons = PFcourt.getElementsByClassName('player-icon-red');
-        if (RplayerIcons.length > 2) {
-            RplayerIcons[0].remove();
-        }
-    }else{
-        const BplayerIcons = PFcourt.getElementsByClassName('player-icon-blue');
-        if (BplayerIcons.length > 1) {
-            BplayerIcons[0].remove();
-        }
-        const RplayerIcons = PFcourt.getElementsByClassName('player-icon-red');
-        if (RplayerIcons.length > 1) {
-            RplayerIcons[0].remove();
-        }
-    }
-    
-    console.log(BplayerIcons)
-    
-    console.log(RplayerIcons)
-    */
-    
   
 }
 
@@ -154,11 +125,25 @@ function toggleFormation() {
         formationTitle.textContent = 'Doubles Formations';
         let utterance = new SpeechSynthesisUtterance("doubles");
         PFMode = 2;
+        removeAllPlayerIcons();
         // speechSynthesis.speak(utterance);
     } else {
         formationTitle.textContent = 'Singles Formations';
         let utterance = new SpeechSynthesisUtterance("Singles");
         PFMode = 1;
+        removeAllPlayerIcons();
         // speechSynthesis.speak(utterance);
     }
 }
+
+// Function to remove all player icons from the court
+function removeAllPlayerIcons() {
+    const playerIconsRed = PFcourt.getElementsByClassName('player-icon-red');
+    while (playerIconsRed.length > 0) {
+      playerIconsRed[0].remove();
+    }
+    const playerIconsBlue = PFcourt.getElementsByClassName('player-icon-blue');
+    while (playerIconsBlue.length > 0) {
+      playerIconsBlue[0].remove();
+    }
+  }
