@@ -65,11 +65,11 @@ function startGameMode() {
 
 
 // Function to add a player icon at the clicked position
-function addPlayerIcon(event) {
+function addPlayerIcon(given) {
     // Get the clicked coordinates relative to the court image
     const rect = PFcourt.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    const x = given.x;
+    const y = given.y;
 
     // Calculate the vertical position as a %
     const imageHeight = rect.height;
@@ -110,10 +110,7 @@ function addPlayerIcon(event) {
           bluePlayerIcons[0].remove(); // Remove the oldest blue player icon
         }
       }
-    
 
-    
-  
 }
 
 
@@ -146,7 +143,7 @@ function removeAllPlayerIcons() {
     while (playerIconsBlue.length > 0) {
       playerIconsBlue[0].remove();
     }
-  }
+}
 
 
 
@@ -158,24 +155,40 @@ PFcourt.addEventListener('touchend', stopDrawing);
 
 let isDrawing = false;
 let startPoint = {};
+const CLICK_THRESHOLD = 5;
 
 function startDrawing(event) {
+    const rect = PFcourt.getBoundingClientRect();
+
     event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
     isDrawing = true;
     startPoint = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY
+        x: event.changedTouches[0].clientX-rect.left,
+        y: event.changedTouches[0].clientY-rect.top
     };
 }
 
 function stopDrawing() {
+    const rect = PFcourt.getBoundingClientRect();
+
     if (isDrawing) {
         isDrawing = false;
         const endPoint = {
-            x: event.changedTouches[0].clientX,
-            y: event.changedTouches[0].clientY
+            x: event.changedTouches[0].clientX-rect.left,
+            y: event.changedTouches[0].clientY-rect.top
         };
-        drawArrow(startPoint, endPoint);
+
+        // Check if the movement distance is below the click threshold
+        const dx = endPoint.x - startPoint.x;
+        const dy = endPoint.y - startPoint.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < CLICK_THRESHOLD) {
+            // Handle click event separately (e.g., add player icons)
+            addPlayerIcon(endPoint);
+        } else {
+            // Handle drag event (e.g., draw arrow)
+            drawArrow(startPoint, endPoint);
+        }
     }
 }
 
