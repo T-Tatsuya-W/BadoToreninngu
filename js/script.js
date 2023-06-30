@@ -1,74 +1,164 @@
-function toggleFormation() {
-    const formationTitle = document.getElementById('formationTitle');
-    
-    if (formationTitle.textContent === 'Singles Formations') {
-      formationTitle.textContent = 'Doubles Formations';
-    } else {
-      formationTitle.textContent = 'Singles Formations';
-    }
-  }
+// Get DOM elements
+const startGameButton = document.getElementById('RGStartButton');
+const formationTitle = document.getElementById('PFTitleButton');
+const PFcourt = document.getElementById('PFcourt');
+var PFMode = 1;
+
 
 if ('speechSynthesis' in window) {
-// Speech Synthesis supported 🎉
-alert("supports TTS")
-}else{
-    // Speech Synthesis Not Supported 😣
-    alert("Sorry, your browser doesn't support text to speech!");
-}
-  
-// Get DOM elements
-const startGameButton = document.getElementById('startGameButton');
-const formationTitle = document.getElementById('formationTitle');
-const playerFormationsContainer = document.getElementById('playerFormationsContainer');
-const gameContainer = document.getElementById('gameContainer');
+    // Speech Synthesis supported 🎉]
+    }else{
+        // Speech Synthesis Not Supported 😣
+        alert("Sorry, your browser doesn't support text to speech!");
+    }
+
 
 // Event listener for "Start Game" button in player formations mode
 startGameButton.addEventListener('click', startGame);
+PFcourt.addEventListener('click', addPlayerIcon);
 
 // Event listener for "Start Game" button in game mode
 // We'll implement this function later
 
 // Start Game function
 function startGame() {
-  // Hide player formations elements
-  formationTitle.style.display = 'none';
-  playerFormationsContainer.style.display = 'none';
+    // Hide player formations elements
+    formationTitle.style.display = 'none';
 
-  // Display game elements
-  gameContainer.style.display = 'block';
+    // Display game elements
+    // gameContainer.style.display = 'block';
 
-  // Call function to start the game
-  startGameMode();
+    // Call function to start the game
+    startGameMode();
 }
 
 
 function startGameMode() {
     // Get the court element
-    const court = document.getElementById('court');
+    const court = document.getElementById('RGcourt');
   
     // Generate random corner highlights
     const numHighlights = 4; // Number of highlights to generate
     const highlights = [];
   
     for (let i = 0; i < numHighlights; i++) {
-      const randomX = Math.random() * 100; // Random X coordinate (0-100)
-      const randomY = Math.random() * 100; // Random Y coordinate (0-100)
-  
-      const highlight = document.createElement('div');
-      highlight.classList.add('corner-highlight');
-      highlight.style.left = randomX + '%';
-      highlight.style.top = randomY + '%';
-  
-      highlights.push(highlight);
+        const randomX = Math.random() * 100; // Random X coordinate (0-100)
+        const randomY = Math.random() * 100; // Random Y coordinate (0-100)
+
+        const highlight = document.createElement('div');
+        highlight.classList.add('corner-highlight');
+        highlight.style.left = randomX + '%';
+        highlight.style.top = randomY + '%';
+
+        highlights.push(highlight);
     }
   
     // Update the court element with corner highlights
     highlights.forEach((highlight) => {
-      court.appendChild(highlight);
+        court.appendChild(highlight);
     });
   
     // Handle user response and calculate score
   
     // Transition back to player formations mode (optional)
-  }
+}
+
+
+// Function to add a player icon at the clicked position
+function addPlayerIcon(event) {
+    // Get the clicked coordinates relative to the court image
+    const rect = PFcourt.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    // Calculate the vertical position as a %
+    const imageHeight = rect.height;
+    const verticalPosition = (y/imageHeight)*100;
   
+    // Create a player icon element (red circle)
+    const playerIcon = document.createElement('div');
+    playerIcon.style.left = x + 'px';
+    playerIcon.style.top = y + 'px';
+
+    if (verticalPosition < 50){
+        playerIcon.style.backgroundColor = 'red';
+        playerIcon.classList.add('player-icon-red');
+    } else {
+        playerIcon.style.backgroundColor = 'blue';
+        playerIcon.classList.add('player-icon-blue');
+    }
+    
+    
+    // Append the player icon to the court
+    PFcourt.appendChild(playerIcon);
+
+    const redPlayerIcons = PFcourt.getElementsByClassName('player-icon-red');
+    const bluePlayerIcons = PFcourt.getElementsByClassName('player-icon-blue');
+
+
+    if (PFMode === 1){
+        if (redPlayerIcons.length > 1) {
+            redPlayerIcons[0].remove(); // Remove the first red player icon
+        }if (bluePlayerIcons.length > 1) {
+            bluePlayerIcons[0].remove(); // Remove the first red player icon
+        }
+      } else if (PFMode === 2) {
+        if (redPlayerIcons.length > 2) {
+          redPlayerIcons[0].remove(); // Remove the oldest red player icon
+        }
+        if (bluePlayerIcons.length > 2) {
+          bluePlayerIcons[0].remove(); // Remove the oldest blue player icon
+        }
+      }
+    
+
+    
+
+    /*
+    
+    // Check if in doubles mode and replace the oldest token
+    if (PFMode == 2) {
+        const BplayerIcons = PFcourt.getElementsByClassName('player-icon-blue');
+        if (BplayerIcons.length > 2) {
+            BplayerIcons[0].remove();
+        }
+        const RplayerIcons = PFcourt.getElementsByClassName('player-icon-red');
+        if (RplayerIcons.length > 2) {
+            RplayerIcons[0].remove();
+        }
+    }else{
+        const BplayerIcons = PFcourt.getElementsByClassName('player-icon-blue');
+        if (BplayerIcons.length > 1) {
+            BplayerIcons[0].remove();
+        }
+        const RplayerIcons = PFcourt.getElementsByClassName('player-icon-red');
+        if (RplayerIcons.length > 1) {
+            RplayerIcons[0].remove();
+        }
+    }
+    
+    console.log(BplayerIcons)
+    
+    console.log(RplayerIcons)
+    */
+    
+  
+}
+
+
+// Toggle Formation Title and counters
+function toggleFormation() {
+    const formationTitle = document.getElementById('PFTitle');
+    
+    if (formationTitle.textContent === 'Singles Formations') {
+        formationTitle.textContent = 'Doubles Formations';
+        let utterance = new SpeechSynthesisUtterance("doubles");
+        PFMode = 2;
+        // speechSynthesis.speak(utterance);
+    } else {
+        formationTitle.textContent = 'Singles Formations';
+        let utterance = new SpeechSynthesisUtterance("Singles");
+        PFMode = 1;
+        // speechSynthesis.speak(utterance);
+    }
+}

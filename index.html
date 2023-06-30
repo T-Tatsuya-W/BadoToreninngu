@@ -3,30 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Badminton Trainer</title>
-  <link rel="stylesheet" type="text/css" href="css/xstyles.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-  <div id="playerFormationsContainer">
-    <h1 id="formationTitle" class="button" onclick="toggleFormation()">Singles Formations</h1>
+    <!-- Player Formations mode -->
+
+    <button  class="button" id = "PFTitleButton" onclick="toggleFormation()"><h1 id="PFTitle">Singles Formations</h1></button>
+    <div class="court" id = "PFcourt">
+        <img id="courtImage" src="images/courtLines.jpg" alt="Badminton Court">
+        
+    </div>    
+    <button id="RGStartButton" class="button">Start Interval Trainer</button>
     
-    <!-- Add other necessary HTML elements for the player formations mode -->
-    <div id="court">
+
+    <!-- Reaction Game mode -->
+    <h1 style="display: none;">Game</h1>
+    <div class="court"  id = "RGcourt" style="display: none;" >
         <img id="courtImage" src="images/courtLines.jpg" alt="Badminton Court">
         
     </div>
-    
-    <button id="startGameButton" class="button">Start Interval Trainer</button>
-  </div>
-
-
-  <div id = "gameContainer"   style="display: none;">
-    <h1>Game</h1>
-    <div id="court">
-        <img id="courtImage" src="images/courtLines.jpg" alt="Badminton Court">
-        
-    </div>
-  </div>
 
   <script src="js/script.js"></script>
 </body>
