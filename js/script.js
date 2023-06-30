@@ -1,7 +1,8 @@
 // Get DOM elements
-const startGameButton = document.getElementById('RGStartButton');
+const RGButton = document.getElementById('RGButton');
 const formationTitle = document.getElementById('PFTitleButton');
 const PFcourt = document.getElementById('PFcourt');
+const RGcourt = document.getElementById('RGcourt');
 var PFMode = 1;
 
 
@@ -14,7 +15,7 @@ if ('speechSynthesis' in window) {
 
 
 // Event listener for "Start Game" button in player formations mode
-startGameButton.addEventListener('click', startGame);
+RGButton.addEventListener('click', startGame);
 PFcourt.addEventListener('click', addPlayerIcon);
 
 // Event listener for "Start Game" button in game mode
@@ -23,19 +24,18 @@ PFcourt.addEventListener('click', addPlayerIcon);
 // Start Game function
 function startGame() {
     // Hide player formations elements
+    removeAllPlayerIcons();
+    removeArrows();
     formationTitle.style.display = 'none';
+    PFcourt.style.display = 'none';
+    RGButton.style.display = 'none';
 
-    // Display game elements
-    // gameContainer.style.display = 'block';
-
-    // Call function to start the game
     startGameMode();
 }
 
-
+ 
 function startGameMode() {
     // Get the court element
-    const court = document.getElementById('RGcourt');
   
     // Generate random corner highlights
     const numHighlights = 4; // Number of highlights to generate
@@ -55,7 +55,7 @@ function startGameMode() {
   
     // Update the court element with corner highlights
     highlights.forEach((highlight) => {
-        court.appendChild(highlight);
+        RGcourt.appendChild(highlight);
     });
   
     // Handle user response and calculate score
@@ -145,7 +145,12 @@ function removeAllPlayerIcons() {
     }
 }
 
-
+function removeArrows() {
+    const arrows = PFcourt.getElementsByClassName('arrow');
+    while (arrows.length > 0) {
+      arrows[0].remove();
+    }
+}
 
 
 
@@ -155,7 +160,7 @@ PFcourt.addEventListener('touchend', stopDrawing);
 
 let isDrawing = false;
 let startPoint = {};
-const CLICK_THRESHOLD = 5;
+const CLICK_THRESHOLD = 10;
 
 function startDrawing(event) {
     const rect = PFcourt.getBoundingClientRect();
@@ -195,11 +200,8 @@ function stopDrawing() {
 
 function drawArrow(startPoint, endPoint) {
     //delete any existing arrows.
-    const arrows = PFcourt.getElementsByClassName('arrow');
-    while (arrows.length > 0) {
-      arrows[0].remove();
-    }
-
+    removeArrows();
+    
     console.log("draw an arrow");
     const arrow = document.createElement('div');
     arrow.classList.add('arrow');
