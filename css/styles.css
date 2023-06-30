@@ -77,3 +77,42 @@ body {
     transform-origin: 0 50%;
   }
   
+
+
+  /* CSS for the settings page */
+
+#settingsPage {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  #settingsPage h2 {
+    text-align: center;
+  }
+  
+  #settingsPage label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  #settingsPage input[type="number"],
+  #settingsPage input[type="text"],
+  #settingsPage button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  #settingsPage button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #settingsPage button:hover {
+    background-color: #45a049;
+  }
+  
