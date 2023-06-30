@@ -3,6 +3,7 @@ const RGButton = document.getElementById('RGButton');
 const formationTitle = document.getElementById('PFTitleButton');
 const PFcourt = document.getElementById('PFcourt');
 const RGcourt = document.getElementById('RGcourt');
+const Settings = document.getElementById('settingsPage');
 var PFMode = 1;
 
 
@@ -15,53 +16,65 @@ if ('speechSynthesis' in window) {
 
 
 // Event listener for "Start Game" button in player formations mode
-RGButton.addEventListener('click', startGame);
+RGButton.addEventListener('click', SetupGame);
 PFcourt.addEventListener('click', addPlayerIcon);
 
 // Event listener for "Start Game" button in game mode
 // We'll implement this function later
 
 // Start Game function
-function startGame() {
+function SetupGame() {
     // Hide player formations elements
     removeAllPlayerIcons();
     removeArrows();
     formationTitle.style.display = 'none';
     PFcourt.style.display = 'none';
     RGButton.style.display = 'none';
-
-    startGameMode();
+    RGButton.style.display = 'none';
+    Settings.style.display = 'block';
+    
 }
 
- 
-function startGameMode() {
-    // Get the court element
-  
-    // Generate random corner highlights
-    const numHighlights = 4; // Number of highlights to generate
-    const highlights = [];
-  
-    for (let i = 0; i < numHighlights; i++) {
-        const randomX = Math.random() * 100; // Random X coordinate (0-100)
-        const randomY = Math.random() * 100; // Random Y coordinate (0-100)
 
-        const highlight = document.createElement('div');
-        highlight.classList.add('corner-highlight');
-        highlight.style.left = randomX + '%';
-        highlight.style.top = randomY + '%';
 
-        highlights.push(highlight);
-    }
-  
-    // Update the court element with corner highlights
-    highlights.forEach((highlight) => {
-        RGcourt.appendChild(highlight);
-    });
-  
-    // Handle user response and calculate score
-  
-    // Transition back to player formations mode (optional)
+// Get DOM elements
+const startGameButton = document.getElementById('startGameButton');
+const intervalInput = document.getElementById('intervalInput');
+const speechCheckbox = document.getElementById('speechCheckbox');
+const usernameInput = document.getElementById('usernameInput');
+
+// Event listener for "Start Game" button
+startGameButton.addEventListener('click', startGame);
+
+// Start Game function
+function startGame() {
+  // Retrieve the selected settings
+  const interval = parseInt(intervalInput.value);
+  const enableSpeech = speechCheckbox.checked;
+  const username = usernameInput.value;
+
+  // Hide the settings page
+  document.getElementById('settingsPage').style.display = 'none';
+
+  // Start the game with the selected settings
+  startReactionGame(interval, enableSpeech, username);
 }
+
+function startReactionGame(interval, enableSpeech, username) {
+    console.log("game starts");
+    // Game logic goes here
+    // You can use the provided interval, enableSpeech, and username variables
+    // to customize the behavior of the game based on the selected settings.
+    // For example, you can use the interval to control the time between sets,
+    // enableSpeech to determine whether to use speech prompts, and username to
+    // store the player's name for later use.
+  
+    // Display the game elements
+    // ...
+  }
+  
+
+
 
 
 // Function to add a player icon at the clicked position
@@ -160,7 +173,7 @@ PFcourt.addEventListener('touchend', stopDrawing);
 
 let isDrawing = false;
 let startPoint = {};
-const CLICK_THRESHOLD = 10;
+const CLICK_THRESHOLD = 100;
 
 function startDrawing(event) {
     const rect = PFcourt.getBoundingClientRect();
