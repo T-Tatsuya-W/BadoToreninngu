@@ -147,3 +147,47 @@ function removeAllPlayerIcons() {
       playerIconsBlue[0].remove();
     }
   }
+
+
+
+
+
+// Draw Arrow
+PFcourt.addEventListener('touchstart', startDrawing);
+PFcourt.addEventListener('touchend', stopDrawing);
+
+let isDrawing = false;
+let startPoint = {};
+
+function startDrawing(event) {
+    event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+    isDrawing = true;
+    startPoint = {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY
+    };
+}
+
+function stopDrawing() {
+    if (isDrawing) {
+        isDrawing = false;
+        const endPoint = {
+            x: event.changedTouches[0].clientX,
+            y: event.changedTouches[0].clientY
+        };
+        drawArrow(startPoint, endPoint);
+    }
+}
+
+
+function drawArrow(startPoint, endPoint) {
+    console.log("draw an arrow");
+    const arrow = document.createElement('div');
+    arrow.classList.add('arrow');
+    const angle = Math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x);
+    const length = Math.sqrt(Math.pow(endPoint.x - startPoint.x, 2) + Math.pow(endPoint.y - startPoint.y, 2));
+    arrow.style.width = length + 'px';
+    arrow.style.transform = `translate(${startPoint.x}px, ${startPoint.y}px) rotate(${angle}rad)`;
+    PFcourt.appendChild(arrow);
+  }
+  
