@@ -7,6 +7,14 @@ function toggleFormation() {
       formationTitle.textContent = 'Singles Formations';
     }
   }
+
+if ('speechSynthesis' in window) {
+// Speech Synthesis supported 🎉
+alert("supports TTS")
+}else{
+    // Speech Synthesis Not Supported 😣
+    alert("Sorry, your browser doesn't support text to speech!");
+}
   
 // Get DOM elements
 const startGameButton = document.getElementById('startGameButton');

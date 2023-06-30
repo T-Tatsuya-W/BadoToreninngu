@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Page Title</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 20px;
+    }
+
+    .content {
+      flex-grow: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .content img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    button {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Title</h1>
+  <div class="content">
+    <img src="images/courtLines.jpg" alt="Image">
+  </div>
+  <button>Button</button>
+  <script>if ('speechSynthesis' in window) {
+    // Speech Synthesis supported 🎉
+    alert("supports TTS")
+   }else{
+     // Speech Synthesis Not Supported 😣
+     alert("Sorry, your browser doesn't support text to speech!");
+   }</script>
+</body>
+</html>
