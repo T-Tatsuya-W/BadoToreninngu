@@ -194,6 +194,12 @@ function stopDrawing() {
 
 
 function drawArrow(startPoint, endPoint) {
+    //delete any existing arrows.
+    const arrows = PFcourt.getElementsByClassName('arrow');
+    while (arrows.length > 0) {
+      arrows[0].remove();
+    }
+
     console.log("draw an arrow");
     const arrow = document.createElement('div');
     arrow.classList.add('arrow');
